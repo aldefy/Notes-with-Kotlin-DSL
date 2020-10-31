@@ -1,11 +1,7 @@
-package com.spacemonk.rockets.test
+package com.caster.notes.dsl.common.test
 
 import com.nhaarman.mockito_kotlin.given
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.*
 import org.mockito.BDDMockito
 
 infix fun <T> T?.willReturn(value: T): BDDMockito.BDDMyOngoingStubbing<T?> =
