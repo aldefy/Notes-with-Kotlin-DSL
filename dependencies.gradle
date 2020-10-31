@@ -113,15 +113,32 @@ ext {
     loggingLibs = logging.values()
 
     uiDeps = [
-            rxBinding : 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
+            rxBinding: 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
     ]
 
     ui = uiDeps.values()
 
     timeUtilsDeps = [
             timeAgo: "com.github.perfomer:blitz:1.0.9",
-            lottie: "com.airbnb.android:lottie:${LottieVersion}"
+            lottie : "com.airbnb.android:lottie:${LottieVersion}"
     ]
 
     time = timeUtilsDeps.values()
+
+
+    testingDeps = [
+            coreTesting         : "androidx.arch.core:core-testing:2.1.0",
+            junit               : "junit:junit:4.12",
+            junit5Mocktio       : "org.mockito:mockito-junit-jupiter:2.17.0",
+            junitRunner         : "org.junit.platform:junit-platform-runner:1.4.0",
+            mockitoCore         : "org.mockito:mockito-core:2.25.0",
+            mockitoKotlin       : "com.nhaarman:mockito-kotlin:1.6.0",
+            junit_jupiter_api   : "org.junit.jupiter:junit-jupiter-api:5.2.0",
+            junit_jupiter_params: "org.junit.jupiter:junit-jupiter-params:5.2.0",
+            junit_jupiter_engine: "org.junit.jupiter:junit-jupiter-engine:5.2.0",
+            mockitoAndroid      : "org.mockito:mockito-android:2.25.0",
+
+    ]
+
+    testing = testingDeps.values()
 }
