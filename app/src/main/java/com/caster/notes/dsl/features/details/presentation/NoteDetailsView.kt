@@ -1,4 +1,4 @@
-package com.caster.notes.dsl.features.add.presentation
+package com.caster.notes.dsl.features.details.presentation
 
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -13,7 +13,7 @@ import io.reactivex.functions.Function
 import kotlinx.android.synthetic.main.activity_add_note.view.*
 import javax.inject.Inject
 
-interface NoteAddView {
+interface NoteDetailsView {
     val titleET: TextInputEditText
     val contentET: TextInputEditText
     val saveButton: Button
@@ -25,7 +25,7 @@ interface NoteAddView {
     fun hideLoading(): Function<Observable<Unit>, Disposable>
 }
 
-class NoteAddViewImpl @Inject constructor(view: View) : NoteAddView {
+class NoteDetailsViewImpl @Inject constructor(view: View) : NoteDetailsView {
     override val saveButton: Button = view.btnSave
     override val contentET: TextInputEditText = view.etNoteContent.apply {
         multilineIme(EditorInfo.IME_ACTION_DONE)

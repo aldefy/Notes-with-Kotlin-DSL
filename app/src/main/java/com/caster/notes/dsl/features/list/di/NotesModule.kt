@@ -3,7 +3,6 @@ package com.caster.notes.dsl.features.list.di
 import androidx.lifecycle.ViewModel
 import com.caster.notes.dsl.common.ViewModelKey
 import com.caster.notes.dsl.common.di.module.ViewModelModule
-import com.caster.notes.dsl.features.add.domain.NoteAddViewModel
 import com.caster.notes.dsl.features.list.domain.*
 import com.caster.notes.dsl.features.list.presentation.NotesView
 import com.caster.notes.dsl.features.list.presentation.NotesViewImpl

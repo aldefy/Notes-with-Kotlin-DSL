@@ -9,6 +9,7 @@ import javax.inject.Inject
 interface NoteRepository {
     fun getNotes(): Observable<List<Note>>
     fun insertNote(note: Note): Single<Long>
+    fun nuke(): Single<Unit>
 }
 
 class NoteRepositoryImpl @Inject constructor(
@@ -22,10 +23,22 @@ class NoteRepositoryImpl @Inject constructor(
         return Single.create { emitter ->
             if (emitter.isDisposed.not())
                 emitter.onSuccess(
-                    db.notesDao().insert(note)
+                    db.notesDao().addOrUpdate(note)
                 )
             else
                 emitter.onError(Throwable("Emitter disposed"))
+        }
+    }
+
+    override fun nuke(): Single<Unit> {
+        return Single.create { emitter ->
+            if (emitter.isDisposed.not())
+                emitter.onSuccess(
+                    db.notesDao().nuke()
+                )
+            else
+                emitter.onError(Throwable("Emitter disposed"))
+
         }
     }
 }

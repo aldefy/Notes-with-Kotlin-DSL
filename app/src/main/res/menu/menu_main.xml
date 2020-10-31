@@ -1,12 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".features.add.presentation.NoteAddActivity">
+    tools:context=".features.details.presentation.NoteAddActivity">
   <item
       android:id="@+id/action_clear"
       android:orderInCategory="200"
+      android:icon="@drawable/ic_delete_all"
       android:title="@string/action_clear_all"
-      app:showAsAction="never" />
+      app:showAsAction="always" />
 
     <item
         android:id="@+id/action_search"

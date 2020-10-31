@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.caster.notes.dsl.R
@@ -26,14 +27,15 @@ class NotesContentView @JvmOverloads constructor(
         notesRecyclerView.layoutManager = linearLayoutManager
         notesRecyclerView.adapter = adapter
         notesRecyclerView.addItemDecoration(
-            DividerItemDecoration(
-                context,
-                DividerItemDecoration.VERTICAL
-            )
+            DividerItemDecoration(context, DividerItemDecoration.VERTICAL).also {
+                it.setDrawable(ContextCompat.getDrawable(context, R.drawable.divider_insets)!!)
+            }
         )
     }
 
     fun setData(data: List<Note>) {
+        hideError()
+        notesRecyclerView.show()
         adapter.setData(data)
     }
 
@@ -51,5 +53,19 @@ class NotesContentView @JvmOverloads constructor(
 
     fun searchNotes(query: String) {
         adapter.filter.filter(query)
+    }
+
+    fun showError(title: String?=null, message: String) {
+        notesRecyclerView.hide()
+        errorView.showError(title, message)
+    }
+
+    fun showEmpty(){
+        notesRecyclerView.hide()
+        errorView.showEmpty()
+    }
+
+    private fun hideError(){
+        errorView.hide()
     }
 }

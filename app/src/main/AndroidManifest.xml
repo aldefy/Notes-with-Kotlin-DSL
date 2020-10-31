@@ -22,7 +22,7 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:name=".features.add.presentation.NoteAddActivity"
+    <activity android:name=".features.details.presentation.NoteAddActivity"
         android:label="@string/add_note"
         android:windowSoftInputMode="adjustPan"
         android:theme="@style/AppTheme.NoActionBar"/>

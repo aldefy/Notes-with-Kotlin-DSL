@@ -16,10 +16,12 @@ import javax.inject.Inject
 interface NotesView {
     val fab: FloatingActionButton
     val notesContentView: NotesContentView
-    val searchView : NoteSearchView
+    val searchView: NoteSearchView
     fun hideLoading(): Function<Observable<Unit>, Disposable>
     fun showLoading(): Function<Observable<Unit>, Disposable>
     fun bindNotes(notes: List<Note>): Function<Observable<NotesFetched>, Disposable>
+    fun showError(throwable: Throwable): Function<Observable<Unit>, Disposable>
+    fun showEmpty(): Function<Observable<Unit>, Disposable>
 }
 
 class NotesViewImpl @Inject constructor(val view: View) : NotesView {
@@ -39,4 +41,14 @@ class NotesViewImpl @Inject constructor(val view: View) : NotesView {
         RxUi.ui {
             notesContentView.setData(notes)
         }
+
+    override fun showError(throwable: Throwable): Function<Observable<Unit>, Disposable> = RxUi.ui {
+        notesContentView.showError(
+            message = throwable.message ?: "Error"
+        )
+    }
+
+    override fun showEmpty(): Function<Observable<Unit>, Disposable> = RxUi.ui {
+        notesContentView.showEmpty()
+    }
 }

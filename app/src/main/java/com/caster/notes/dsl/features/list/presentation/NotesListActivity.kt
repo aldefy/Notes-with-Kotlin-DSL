@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import com.caster.notes.dsl.R
 import com.caster.notes.dsl.common.BaseActivity
 import com.caster.notes.dsl.common.addTo
-import com.caster.notes.dsl.features.add.presentation.NoteAddActivity
+import com.caster.notes.dsl.features.details.presentation.NoteAddActivity
 import com.caster.notes.dsl.features.list.di.NotesInjector
 import com.caster.notes.dsl.features.list.domain.NotesListViewModel
 import com.caster.notes.dsl.features.list.domain.NotesState
@@ -40,7 +40,10 @@ class NotesListActivity : BaseActivity<NotesListViewModel, NotesState>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_clear -> true
+            R.id.action_clear -> {
+                vm.clearAll()
+                true
+            }
             R.id.action_search -> with(item) {
                 actionView = view.searchView
                 (actionView as NoteSearchView).apply {
@@ -52,7 +55,7 @@ class NotesListActivity : BaseActivity<NotesListViewModel, NotesState>() {
                         disposable = compositeBag
                     )
                     setCloseClickedListener {
-
+                        item.collapseActionView()
                     }
                 }
                 true
@@ -72,13 +75,19 @@ class NotesListActivity : BaseActivity<NotesListViewModel, NotesState>() {
 
         screen.bind(view, state.share())
             .addTo(compositeBag)
+        screen.withNoteClickHandler(view)
         screen.withFAB(view = view)
         screen.event.observe(
             this,
             Observer { event ->
                 when (event) {
                     is NotesFetchedEvent -> {
-
+                    }
+                    is ShowErrorEvent -> {
+                        screen.showError(view, event.throwable)
+                    }
+                    is NoteClickedEvent -> {
+                        startActivity(NoteAddActivity.create(this, event.note))
                     }
                     is FABClickedEvent -> {
                         startActivity(NoteAddActivity.create(this))

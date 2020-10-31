@@ -5,10 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.caster.notes.dsl.common.addTo
 import com.caster.notes.dsl.common.bind
-import com.caster.notes.dsl.features.list.domain.HideLoading
-import com.caster.notes.dsl.features.list.domain.NotesFetched
-import com.caster.notes.dsl.features.list.domain.NotesState
-import com.caster.notes.dsl.features.list.domain.ShowLoading
+import com.caster.notes.dsl.features.list.domain.*
+import com.caster.notes.dsl.model.Note
+import com.caster.notes.dsl.views.NotesAdapter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -41,10 +40,24 @@ class NotesScreenImpl : NotesScreen {
         view.notesContentView.searchNotes(query)
     }
 
+    fun withNoteClickHandler(view: NotesView) {
+        view.notesContentView.setNoteClickListener(object : NotesAdapter.NoteClickListener {
+            override fun noteClicked(note: Note) {
+                _event.value = NoteClickedEvent(note)
+            }
+        })
+    }
+
     fun withFAB(view: NotesView) {
         view.fab.setOnClickListener {
             _event.value = FABClickedEvent
         }
+    }
+
+    fun showError(view: NotesView, throwable: Throwable) {
+        view.notesContentView.showError(
+            message = throwable.message ?: "Error"
+        )
     }
 
     private fun setupLoading(
@@ -80,6 +93,13 @@ class NotesScreenImpl : NotesScreen {
             }
             .subscribe()
             .addTo(compositeDisposable)
+
+        observable
+            .ofType(NotesEmpty::class.java)
+            .observeOn(AndroidSchedulers.mainThread())
+            .map { Unit }
+            .bind(view.showEmpty())
+            .addTo(compositeDisposable)
     }
 
     private fun setupError(
@@ -87,6 +107,23 @@ class NotesScreenImpl : NotesScreen {
         observable: Observable<NotesState>,
         compositeDisposable: CompositeDisposable
     ) {
+        observable
+            .ofType(ShowError::class.java)
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                _event.value = ShowErrorEvent(it.throwable)
+                Unit
+            }
+            .subscribe()
+            .addTo(compositeDisposable)
 
+        observable
+            .ofType(ShowEmpty::class.java)
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                Unit
+            }
+            .bind(view.showEmpty())
+            .addTo(compositeDisposable)
     }
 }

@@ -15,6 +15,7 @@ ext {
     def junit_jupiter_version = "5.3.1"
     def junit_vintage_version = "5.3.1"
     def android_junit5_version = "1.4.2.1"
+    def LottieVersion = '3.4.0'
     def room_version = "2.2.5"
     def daggerVersion = '2.25.2'
     def daggerAndroidVersion = '2.22.1'
@@ -116,4 +117,11 @@ ext {
     ]
 
     ui = uiDeps.values()
+
+    timeUtilsDeps = [
+            timeAgo: "com.github.perfomer:blitz:1.0.9",
+            lottie: "com.airbnb.android:lottie:${LottieVersion}"
+    ]
+
+    time = timeUtilsDeps.values()
 }

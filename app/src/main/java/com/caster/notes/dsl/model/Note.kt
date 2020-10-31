@@ -23,7 +23,7 @@ data class Note(
     /**
      * mills in Long from DateTime - the date when note was updated
      */
-    var updatedAt: Long,
+    var updatedAt: Long = createdAt,
     /**
      * Auto generated id
      */

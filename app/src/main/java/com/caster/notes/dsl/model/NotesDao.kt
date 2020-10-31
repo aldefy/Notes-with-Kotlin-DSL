@@ -10,11 +10,11 @@ interface NotesDao {
     fun getAllNotes(): Observable<List<Note>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(note: Note) : Long
+    fun addOrUpdate(note: Note) : Long
 
     @Delete
     fun delete(note: Note)
 
     @Query("DELETE FROM note")
-    fun deleteAll()
+    fun nuke()
 }

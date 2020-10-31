@@ -1,4 +1,4 @@
-package com.caster.notes.dsl.features.add.presentation
+package com.caster.notes.dsl.features.details.presentation
 
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.LifecycleObserver
@@ -6,28 +6,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.caster.notes.dsl.common.addTo
 import com.caster.notes.dsl.common.bind
-import com.caster.notes.dsl.features.add.domain.NoteAddState
-import com.caster.notes.dsl.features.add.domain.NoteSaved
+import com.caster.notes.dsl.features.details.domain.NoteDetailsState
+import com.caster.notes.dsl.features.details.domain.NoteSaved
 import com.caster.notes.dsl.features.list.domain.HideLoading
 import com.caster.notes.dsl.features.list.domain.ShowLoading
+import com.caster.notes.dsl.model.Note
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-interface NoteAddScreen : LifecycleObserver {
-    val event: LiveData<NoteAddEvent>
+interface NoteDetailsScreen : LifecycleObserver {
+    val event: LiveData<NoteDetailsEvent>
 
     fun bind(
-        view: NoteAddView,
-        observable: Observable<NoteAddState>
+        view: NoteDetailsView,
+        observable: Observable<NoteDetailsState>
     ): Disposable
 }
 
-class NoteAddScreenImpl : NoteAddScreen {
-    private val _event = MutableLiveData<NoteAddEvent>()
-    override val event: LiveData<NoteAddEvent> = _event
+class NoteDetailsScreenImpl : NoteDetailsScreen {
+    private val _event = MutableLiveData<NoteDetailsEvent>()
+    override val event: LiveData<NoteDetailsEvent> = _event
 
-    override fun bind(view: NoteAddView, observable: Observable<NoteAddState>): Disposable {
+    override fun bind(view: NoteDetailsView, observable: Observable<NoteDetailsState>): Disposable {
         return CompositeDisposable().apply {
             setupContent(view, observable, this)
             setupLoading(view, observable, this)
@@ -35,7 +36,12 @@ class NoteAddScreenImpl : NoteAddScreen {
         }
     }
 
-    fun withSaveButtonClick(view: NoteAddView) {
+    fun withNote(note: Note, view: NoteDetailsView) {
+        view.titleET.setText(note.title)
+        view.contentET.setText(note.content)
+    }
+
+    fun withSaveButtonClick(view: NoteDetailsView) {
         view.saveButton.setOnClickListener {
             val title = view.getTitle()
             val content = view.getContent()
@@ -43,9 +49,9 @@ class NoteAddScreenImpl : NoteAddScreen {
         }
     }
 
-    fun withInputActionDone(view: NoteAddView){
+    fun withInputActionDone(view: NoteDetailsView) {
         view.contentET.setOnEditorActionListener { v, actionId, event ->
-            if(actionId == EditorInfo.IME_ACTION_DONE) {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
                 view.saveButton.callOnClick()
                 true
             }
@@ -54,8 +60,8 @@ class NoteAddScreenImpl : NoteAddScreen {
     }
 
     private fun setupLoading(
-        view: NoteAddView,
-        observable: Observable<NoteAddState>,
+        view: NoteDetailsView,
+        observable: Observable<NoteDetailsState>,
         compositeDisposable: CompositeDisposable
     ) {
         observable
@@ -72,8 +78,8 @@ class NoteAddScreenImpl : NoteAddScreen {
     }
 
     private fun setupContent(
-        view: NoteAddView,
-        observable: Observable<NoteAddState>,
+        view: NoteDetailsView,
+        observable: Observable<NoteDetailsState>,
         compositeDisposable: CompositeDisposable
     ) {
         observable
@@ -87,8 +93,8 @@ class NoteAddScreenImpl : NoteAddScreen {
     }
 
     private fun setupError(
-        view: NoteAddView,
-        observable: Observable<NoteAddState>,
+        view: NoteDetailsView,
+        observable: Observable<NoteDetailsState>,
         compositeDisposable: CompositeDisposable
     ) {
 

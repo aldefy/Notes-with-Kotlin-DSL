@@ -22,4 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout="@layout/layout_shimmer_notes" />
+
+    <com.caster.notes.dsl.views.ErrorView
+        android:id="@+id/errorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

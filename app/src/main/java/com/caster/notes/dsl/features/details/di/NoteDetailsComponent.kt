@@ -1,16 +1,15 @@
-package com.caster.notes.dsl.features.add.di
+package com.caster.notes.dsl.features.details.di
 
 import android.view.View
 import com.caster.notes.dsl.common.di.component.CommonComponent
-import com.caster.notes.dsl.features.list.di.NotesScope
-import com.caster.notes.dsl.features.add.presentation.NoteAddActivity
+import com.caster.notes.dsl.features.details.presentation.NoteAddActivity
 import dagger.BindsInstance
 import dagger.Component
 
-@NoteAddScope
+@NoteDetailsScope
 @Component(
     modules = [
-        NoteAddModule::class
+        NotesDetailsModule::class
     ],
     dependencies = [CommonComponent::class]
 )

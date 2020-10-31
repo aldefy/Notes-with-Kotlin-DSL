@@ -1,24 +1,23 @@
-package com.caster.notes.dsl.features.add.domain
+package com.caster.notes.dsl.features.details.domain
 
 import com.caster.notes.dsl.model.Note
 import com.caster.notes.dsl.model.NotesDatabase
-import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 
-interface NoteAddRepository {
-    fun insertNote(note: Note): Single<Long>
+interface NoteDetailsRepository {
+    fun saveNote(note: Note): Single<Long>
 }
 
-class NoteAddRepositoryImpl @Inject constructor(
+class NoteDetailsRepositoryImpl @Inject constructor(
     private val db: NotesDatabase
-) : NoteAddRepository {
+) : NoteDetailsRepository {
 
-    override fun insertNote(note: Note): Single<Long> {
+    override fun saveNote(note: Note): Single<Long> {
         return Single.create { emitter ->
             if (emitter.isDisposed.not())
                 emitter.onSuccess(
-                    db.notesDao().insert(note)
+                    db.notesDao().addOrUpdate(note)
                 )
             else
                 emitter.onError(Throwable("Emitter disposed"))

@@ -17,4 +17,7 @@
   <string name="save">Save</string>
   <string name="add_note">Add note</string>
     <string name="generic_search_message">Search notes</string>
+    <string name="error_general">Something went wrong !</string>
+  <string name="error_empty">No go amigo!</string>
+  <string name="error_empty_message">There no notes , add a new one ?</string>
 </resources>

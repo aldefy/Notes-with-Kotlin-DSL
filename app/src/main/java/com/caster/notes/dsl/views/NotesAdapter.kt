@@ -8,7 +8,9 @@ import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.caster.notes.dsl.R
 import com.caster.notes.dsl.model.Note
+import com.perfomer.blitz.setTimeAgo
 import kotlinx.android.synthetic.main.item_note.view.*
+import java.util.*
 
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>(), Filterable {
 
@@ -73,7 +75,11 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>(), Filter
         ) = with(note) {
             itemView.tvNoteTitle.text = title
             itemView.tvNoteText.text = content
-            itemView.tvElapsed.text = "1 min ago"
+            itemView.tvElapsed.setTimeAgo(
+                date = Date(updatedAt),
+                showSeconds = false,
+                autoUpdate = true
+            )
             itemView.setOnClickListener {
                 clickListener?.noteClicked(note = note)
             }

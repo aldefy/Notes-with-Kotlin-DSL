@@ -36,5 +36,6 @@ fun EditText.disabled() = this.apply {
 fun TextInputEditText.multilineIme(action: Int) {
     inputType = EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE
     setHorizontallyScrolling(false)
-    maxLines = Integer.MAX_VALUE
+    maxLines = 20
+    setLines(10)
 }

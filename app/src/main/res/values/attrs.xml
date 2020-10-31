@@ -3,4 +3,10 @@
     <declare-styleable name="Shimmer">
         <attr name="layout" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="ErrorView">
+        <attr name="animJson" format="string" />
+        <attr name="errorTitleText" format="string" />
+        <attr name="errorSubTitleText" format="string" />
+    </declare-styleable>
 </resources>
