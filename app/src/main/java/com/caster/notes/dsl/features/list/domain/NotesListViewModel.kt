@@ -7,22 +7,12 @@ import com.caster.notes.dsl.common.addTo
 import com.caster.notes.dsl.common.observableIo
 import com.caster.notes.dsl.common.singleIo
 import com.caster.notes.dsl.model.Note
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class NotesListViewModel @Inject constructor(var useCase: NotesUseCase) : BaseViewModel() {
     private val _stateLiveData = MutableLiveData<NotesState>()
     val stateLiveData = _stateLiveData
-
-    fun insertNote(note: Note) {
-        useCase.insertNote(note)
-            .compose(singleIo())
-            .subscribe({
-                Log.d("Notes", "$it")
-            }, {
-                it.printStackTrace()
-            })
-            .addTo(bag)
-    }
 
     fun getNotes() {
         _stateLiveData.value = ShowLoading

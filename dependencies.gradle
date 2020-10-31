@@ -110,4 +110,10 @@ ext {
     ]
 
     loggingLibs = logging.values()
+
+    uiDeps = [
+            rxBinding : 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
+    ]
+
+    ui = uiDeps.values()
 }

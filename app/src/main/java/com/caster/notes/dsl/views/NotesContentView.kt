@@ -4,8 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.caster.notes.dsl.R
+import com.caster.notes.dsl.common.hide
+import com.caster.notes.dsl.common.show
 import com.caster.notes.dsl.model.Note
 import kotlinx.android.synthetic.main.layout_notes.view.*
 
@@ -18,10 +21,16 @@ class NotesContentView @JvmOverloads constructor(
     private val adapter = NotesAdapter()
 
     init {
-        View.inflate(context, R.layout.layout_notes, this)
+        View.inflate(context, R.layout.view_notes, this)
         linearLayoutManager.reverseLayout = false
         notesRecyclerView.layoutManager = linearLayoutManager
         notesRecyclerView.adapter = adapter
+        notesRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
     }
 
     fun setData(data: List<Note>) {
@@ -33,10 +42,10 @@ class NotesContentView @JvmOverloads constructor(
     }
 
     fun showLoading() {
-        notesLoadingView.startShimmer()
+        shimmerLoadingView.show()
     }
 
     fun hideLoading() {
-        notesLoadingView.hideShimmer()
+        shimmerLoadingView.hide()
     }
 }

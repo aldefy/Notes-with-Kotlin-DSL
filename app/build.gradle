@@ -60,5 +60,5 @@ dependencies {
     implementation androidX
     kaptAndroidTest testing
     implementation workManager
-    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    implementation ui
 }

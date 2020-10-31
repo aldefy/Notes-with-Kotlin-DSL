@@ -16,4 +16,5 @@
   <string name="note_content_hint">Enter your note here</string>
   <string name="save">Save</string>
   <string name="add_note">Add note</string>
+    <string name="generic_search_message">Search notes</string>
 </resources>
