@@ -21,6 +21,8 @@ interface NotesScreen : LifecycleObserver {
         view: NotesView,
         observable: Observable<NotesState>
     ): Disposable
+
+    fun searchNotes(query: String, view: NotesView)
 }
 
 class NotesScreenImpl : NotesScreen {
@@ -33,6 +35,10 @@ class NotesScreenImpl : NotesScreen {
             setupLoading(view, observable, this)
             setupError(view, observable, this)
         }
+    }
+
+    override fun searchNotes(query: String, view: NotesView) {
+        view.notesContentView.searchNotes(query)
     }
 
     fun withFAB(view: NotesView) {

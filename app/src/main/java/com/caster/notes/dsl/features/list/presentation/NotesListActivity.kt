@@ -11,6 +11,7 @@ import com.caster.notes.dsl.features.add.presentation.NoteAddActivity
 import com.caster.notes.dsl.features.list.di.NotesInjector
 import com.caster.notes.dsl.features.list.domain.NotesListViewModel
 import com.caster.notes.dsl.features.list.domain.NotesState
+import com.caster.notes.dsl.views.NoteSearchView
 import kotlinx.android.synthetic.main.activity_notes.*
 import javax.inject.Inject
 
@@ -40,6 +41,22 @@ class NotesListActivity : BaseActivity<NotesListViewModel, NotesState>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_clear -> true
+            R.id.action_search -> with(item) {
+                actionView = view.searchView
+                (actionView as NoteSearchView).apply {
+                    onActionViewExpanded()
+                    observeTextChanges(
+                        onSuccess = { query ->
+                            screen.searchNotes(query, view)
+                        },
+                        disposable = compositeBag
+                    )
+                    setCloseClickedListener {
+
+                    }
+                }
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

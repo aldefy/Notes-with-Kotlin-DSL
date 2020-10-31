@@ -10,7 +10,7 @@ import com.caster.notes.dsl.R
 import com.caster.notes.dsl.common.hide
 import com.caster.notes.dsl.common.show
 import com.caster.notes.dsl.model.Note
-import kotlinx.android.synthetic.main.layout_notes.view.*
+import kotlinx.android.synthetic.main.view_notes.view.*
 
 class NotesContentView @JvmOverloads constructor(
     context: Context,
@@ -47,5 +47,9 @@ class NotesContentView @JvmOverloads constructor(
 
     fun hideLoading() {
         shimmerLoadingView.hide()
+    }
+
+    fun searchNotes(query: String) {
+        adapter.filter.filter(query)
     }
 }

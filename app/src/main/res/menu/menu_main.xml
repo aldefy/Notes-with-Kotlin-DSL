@@ -4,7 +4,15 @@
     tools:context=".features.add.presentation.NoteAddActivity">
   <item
       android:id="@+id/action_clear"
-      android:orderInCategory="100"
+      android:orderInCategory="200"
       android:title="@string/action_clear_all"
       app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/generic_search_message"
+        app:actionViewClass="com.caster.notes.dsl.views.NoteSearchView"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
 </menu>
