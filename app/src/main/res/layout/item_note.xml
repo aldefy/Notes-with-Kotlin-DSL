@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvNoteTitle"
+        style="@style/Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:layout_toStartOf="@+id/tvElapsed"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginTop="@dimen/margin_small"
+        tools:text="Title"
+        />
+
+    <TextView
+        android:id="@+id/tvElapsed"
+        android:layout_width="wrap_content"
+        android:layout_alignParentEnd="true"
+        tools:text="3 hours ago"
+        android:layout_marginEnd="@dimen/margin_default"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:id="@+id/tvNoteText"
+        style="@style/SubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:maxLines="2"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_below="@+id/tvNoteTitle"
+        android:layout_marginStart="@dimen/margin_default"
+        android:layout_marginBottom="@dimen/margin_default"
+        android:layout_marginEnd="@dimen/margin_default"
+        tools:text="@tools:sample/lorem/random"
+        />
+
+</RelativeLayout>

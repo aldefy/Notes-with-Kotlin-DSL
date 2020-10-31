@@ -1,0 +1,113 @@
+ext {
+    def AndroidxAppCompatVersion = '1.1.0'
+    def AndroidxCoreVersion = '1.1.0'
+    def KotlinVersion = '1.3.71'
+    def MulitDexVersion = "2.0.1"
+    def AndroidxConstraintLayoutVersion = '2.0.0-beta4'
+    def AndroidxSupportVersion = '1.0.0'
+    def AndroidxVectorDrawablesVersion = '1.0.1'
+    def AndroidxLifeCycleVersion = '2.0.0'
+    def TextDrawableVersion = '1.0.1'
+    def GoogleMaterialVersion = '1.0.0'
+    def AndroidxWorkMangerVersion = '2.3.0'
+    def AndroidxRoomVersion = '2.2.4'
+    def junit_platform_version = "1.3.1"
+    def junit_jupiter_version = "5.3.1"
+    def junit_vintage_version = "5.3.1"
+    def android_junit5_version = "1.4.2.1"
+    def room_version = "2.2.5"
+    def daggerVersion = '2.25.2'
+    def daggerAndroidVersion = '2.22.1'
+
+    kotlinDependencies = [
+            kotlin: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${KotlinVersion}"
+    ]
+
+    kotlin = kotlinDependencies.values()
+
+    multiDexDeps = [
+            multiDex: "androidx.multidex:multidex:$MulitDexVersion"
+    ]
+
+    mulitDex = multiDexDeps.values()
+
+    androidxDependencies = [
+            androidxAppCompat          : "androidx.appcompat:appcompat:${AndroidxAppCompatVersion}",
+            androidRVSelection         : "androidx.recyclerview:recyclerview-selection:1.0.0",
+            androidxCore               : "androidx.core:core-ktx:${AndroidxCoreVersion}",
+            androidxContraintLayout    : "androidx.constraintlayout:constraintlayout:${AndroidxConstraintLayoutVersion}",
+            androidxSupport            : "androidx.legacy:legacy-support-v4:${AndroidxSupportVersion}",
+            androidxVectorDrawables    : "androidx.vectordrawable:vectordrawable:${AndroidxVectorDrawablesVersion}",
+            androidxLifecycle          : "androidx.lifecycle:lifecycle-extensions:${AndroidxLifeCycleVersion}",
+            androidxLifecycleViewModel : "androidx.lifecycle:lifecycle-viewmodel-ktx:${AndroidxLifeCycleVersion}",
+            androidxNavigation         : "androidx.navigation:navigation-fragment:${AndroidxLifeCycleVersion}",
+            androidxNavigationUI       : "androidx.navigation:navigation-ui:${AndroidxLifeCycleVersion}",
+            androidxNavigationKtx      : "androidx.navigation:navigation-fragment-ktx:${AndroidxLifeCycleVersion}",
+            androidxNavigationUIKtx    : "androidx.navigation:navigation-ui-ktx:${AndroidxLifeCycleVersion}",
+            androidxLifecycleExtensions: "androidx.lifecycle:lifecycle-extensions:${AndroidxLifeCycleVersion}",
+            androidxRoomRuntime        : "androidx.room:room-runtime:${room_version}",
+            androidxRoomRxJava         : "androidx.room:room-rxjava2:${room_version}",
+            viewpager2                 : "androidx.viewpager2:viewpager2:1.0.0"
+    ]
+
+    androidX = androidxDependencies.values()
+
+    workManagerDependencies = [
+            androidxWorkManagerKtx: "androidx.work:work-runtime-ktx:2.3.4",
+            androidxWorkManagerRx : "androidx.work:work-rxjava2:2.3.4"
+    ]
+
+    workManager = workManagerDependencies.values()
+
+    googleDependencies = [
+            googleMaterial: "com.google.android.material:material:${GoogleMaterialVersion}"
+    ]
+
+    google = googleDependencies.values()
+
+    daggerDeps = [
+            dagger                : "com.google.dagger:dagger:${daggerVersion}",
+            dagger_android        : "com.google.dagger:dagger-android:${daggerAndroidVersion}",
+            dagger_android_support: "com.google.dagger:dagger-android-support:${daggerAndroidVersion}",
+    ]
+    dagger = daggerDeps.values()
+
+    compilersDeps = [
+            dagger_compiler         : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger_android_processor: "com.google.dagger:dagger-android-processor:${daggerAndroidVersion}",
+            room                    : "androidx.room:room-compiler:${AndroidxRoomVersion}",
+            lifecycle               : "androidx.lifecycle:lifecycle-compiler:2.2.0",
+    ]
+
+    compilers = compilersDeps.values()
+
+    testingDeps = [
+            coreTesting         : "androidx.arch.core:core-testing:2.1.0",
+            junit               : "junit:junit:4.12",
+            junit5Mocktio       : "org.mockito:mockito-junit-jupiter:2.17.0",
+            junitRunner         : "org.junit.platform:junit-platform-runner:1.4.0",
+            mockitoCore         : "org.mockito:mockito-core:2.25.0",
+            junit_jupiter_api   : "org.junit.jupiter:junit-jupiter-api:5.2.0",
+            junit_jupiter_params: "org.junit.jupiter:junit-jupiter-params:5.2.0",
+            junit_jupiter_engine: "org.junit.jupiter:junit-jupiter-engine:5.2.0",
+            mockitoAndroid      : "org.mockito:mockito-android:2.25.0",
+
+    ]
+
+    testing = testingDeps.values()
+
+    rxDeps = [
+            rxjava2   : "io.reactivex.rxjava2:rxjava:2.1.12",
+            rxandroid2: "io.reactivex.rxjava2:rxandroid:2.0.2",
+            rxKotlin  : "io.reactivex.rxjava2:rxkotlin:2.2.0",
+    ]
+
+    rx = rxDeps.values()
+
+    logging = [
+            logger: 'com.orhanobut:logger:2.2.0',
+            timber: 'com.jakewharton.timber:timber:4.7.1'
+    ]
+
+    loggingLibs = logging.values()
+}
