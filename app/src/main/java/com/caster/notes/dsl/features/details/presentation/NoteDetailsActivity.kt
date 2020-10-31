@@ -42,7 +42,8 @@ class NoteAddActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
         setContentView(R.layout.activity_add_note)
         NoteDetailsInjector.of(this, contentView)
         setSupportActionBar(toolbar)
-        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
         initListeners()
         processIntent(intent)
     }
@@ -58,6 +59,10 @@ class NoteAddActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
             R.id.action_clear -> true
             else -> super.onOptionsItemSelected(item)
         }
