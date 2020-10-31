@@ -10,7 +10,7 @@ import com.google.android.material.textfield.TextInputEditText
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function
-import kotlinx.android.synthetic.main.activity_add_note.view.*
+import kotlinx.android.synthetic.main.activity_details_note.view.*
 import javax.inject.Inject
 
 interface NoteDetailsView {

@@ -38,6 +38,7 @@ class NotesListActivity : BaseActivity<NotesListViewModel, NotesState>() {
         return true
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_clear -> {
@@ -72,7 +73,6 @@ class NotesListActivity : BaseActivity<NotesListViewModel, NotesState>() {
                     _state.onNext(it)
                 }
             })
-
         screen.bind(view, state.share())
             .addTo(compositeBag)
         screen.withNoteClickHandler(view)

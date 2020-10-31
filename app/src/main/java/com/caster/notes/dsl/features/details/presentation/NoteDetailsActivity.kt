@@ -12,7 +12,7 @@ import com.caster.notes.dsl.features.details.di.NoteDetailsInjector
 import com.caster.notes.dsl.features.details.domain.NoteDetailsState
 import com.caster.notes.dsl.features.details.domain.NoteDetailsViewModel
 import com.caster.notes.dsl.model.Note
-import kotlinx.android.synthetic.main.activity_add_note.*
+import kotlinx.android.synthetic.main.activity_details_note.*
 import javax.inject.Inject
 
 private const val EXTRA_NOTE = "extras_note"
@@ -39,7 +39,7 @@ class NoteAddActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_note)
+        setContentView(R.layout.activity_details_note)
         NoteDetailsInjector.of(this, contentView)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

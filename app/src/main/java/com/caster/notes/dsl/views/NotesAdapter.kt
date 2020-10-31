@@ -12,7 +12,7 @@ import com.perfomer.blitz.setTimeAgo
 import kotlinx.android.synthetic.main.item_note.view.*
 import java.util.*
 
-class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>(), Filterable {
+class NotesAdapter(val dataEmptyListener: ResultsEmptyListener) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>(), Filterable {
 
     private var data: MutableList<Note> = mutableListOf()
     private var searchResults: MutableList<Note> = mutableListOf()
@@ -52,6 +52,12 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>(), Filter
                 searchResults.clear()
                 searchResults.addAll(results.values as MutableList<Note>)
                 notifyDataSetChanged()
+                if(searchResults.isEmpty()) {
+                    dataEmptyListener.showEmpty()
+                }
+                else {
+                    dataEmptyListener.hideEmpty()
+                }
             }
         }
     }
@@ -62,6 +68,12 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>(), Filter
         this.data.addAll(data)
         this.searchResults.addAll(data)
         notifyDataSetChanged()
+        if(searchResults.isEmpty()) {
+            dataEmptyListener.showEmpty()
+        }
+        else {
+            dataEmptyListener.hideEmpty()
+        }
     }
 
     fun setNoteClickListener(clickListener: NoteClickListener?) {
@@ -88,5 +100,10 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>(), Filter
 
     interface NoteClickListener {
         fun noteClicked(note: Note)
+    }
+
+    interface ResultsEmptyListener {
+        fun showEmpty()
+        fun hideEmpty()
     }
 }

@@ -15,6 +15,7 @@
     <activity
         android:name="com.caster.notes.dsl.features.list.presentation.NotesListActivity"
         android:label="@string/app_name"
+        android:windowSoftInputMode="adjustPan"
         android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -24,7 +25,7 @@
     </activity>
     <activity android:name=".features.details.presentation.NoteAddActivity"
         android:label="@string/add_note"
-        android:windowSoftInputMode="adjustPan"
+        android:windowSoftInputMode="adjustResize"
         android:theme="@style/AppTheme.NoActionBar"/>
   </application>
 

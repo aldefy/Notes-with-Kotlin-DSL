@@ -19,7 +19,16 @@ class NotesContentView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
     private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
-    private val adapter = NotesAdapter()
+    private val emptyListener: NotesAdapter.ResultsEmptyListener = object : NotesAdapter.ResultsEmptyListener{
+        override fun showEmpty() {
+            this@NotesContentView.showEmpty()
+        }
+
+        override fun hideEmpty() {
+            this@NotesContentView.resetError()
+        }
+    }
+    private val adapter = NotesAdapter(emptyListener)
 
     init {
         View.inflate(context, R.layout.view_notes, this)
@@ -34,8 +43,7 @@ class NotesContentView @JvmOverloads constructor(
     }
 
     fun setData(data: List<Note>) {
-        hideError()
-        notesRecyclerView.show()
+        resetError()
         adapter.setData(data)
     }
 
@@ -67,5 +75,10 @@ class NotesContentView @JvmOverloads constructor(
 
     private fun hideError(){
         errorView.hide()
+    }
+
+    private fun resetError() {
+        hideError()
+        notesRecyclerView.show()
     }
 }
