@@ -22,6 +22,7 @@ class NotesListViewModel @Inject constructor(var useCase: NotesUseCase) : BaseVi
                 else
                     _stateLiveData.value = NotesFetched(it)
             }, {
+                _stateLiveData.value = ShowError(it)
                 _stateLiveData.value = HideLoading
             })
             .addTo(bag)

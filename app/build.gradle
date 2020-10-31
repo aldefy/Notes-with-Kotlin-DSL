@@ -73,5 +73,8 @@ dependencies {
     implementation ui
     implementation time
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.2"
-    implementation testing
+    implementation("androidx.arch.core:core-testing:2.1.0") { exclude group: 'org.jetbrains.kotlin' }
+    implementation("org.mockito:mockito-inline:2.28.2") { exclude group: 'org.jetbrains.kotlin' }
+    implementation("com.nhaarman:mockito-kotlin:1.6.0") { exclude group: 'org.jetbrains.kotlin' }
+    testImplementation("org.mockito:mockito-core:3.0.0") { exclude group: 'org.jetbrains.kotlin' }
 }
