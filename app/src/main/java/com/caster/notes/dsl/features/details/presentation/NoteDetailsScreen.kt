@@ -47,6 +47,14 @@ class NoteDetailsScreenImpl : NoteDetailsScreen {
         view.saveButton.setOnClickListener {
             val title = view.getTitle()
             val content = view.getContent()
+            if (title.isEmpty()) {
+                _event.value = NoteTitleEmptyEvent
+                return@setOnClickListener
+            }
+            if (content.isEmpty()) {
+                _event.value = NoteContentEmptyEvent
+                return@setOnClickListener
+            }
             _event.value = SubmitClicked(title, content)
         }
     }

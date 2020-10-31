@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.caster.notes.dsl.R
 import com.caster.notes.dsl.common.BaseActivity
@@ -116,6 +117,12 @@ class NoteAddActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
                             .setPositiveButton("Ok") { _, _ ->
                                 finish()
                             }.show()
+                    }
+                    is NoteTitleEmptyEvent ->{
+                        Toast.makeText(this, "Title is empty", Toast.LENGTH_SHORT).show()
+                    }
+                    is NoteContentEmptyEvent->{
+                        Toast.makeText(this, "Content is empty", Toast.LENGTH_SHORT).show()
                     }
                     is AddNoteSuccess -> {
                         finish()
