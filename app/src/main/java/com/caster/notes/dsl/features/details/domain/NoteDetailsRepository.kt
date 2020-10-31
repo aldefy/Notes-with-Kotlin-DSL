@@ -7,6 +7,7 @@ import javax.inject.Inject
 
 interface NoteDetailsRepository {
     fun saveNote(note: Note): Single<Long>
+    fun delete(note: Note): Single<Unit>
 }
 
 class NoteDetailsRepositoryImpl @Inject constructor(
@@ -18,6 +19,17 @@ class NoteDetailsRepositoryImpl @Inject constructor(
             if (emitter.isDisposed.not())
                 emitter.onSuccess(
                     db.notesDao().addOrUpdate(note)
+                )
+            else
+                emitter.onError(Throwable("Emitter disposed"))
+        }
+    }
+
+    override fun delete(note: Note): Single<Unit> {
+        return Single.create { emitter ->
+            if (emitter.isDisposed.not())
+                emitter.onSuccess(
+                    db.notesDao().delete(note)
                 )
             else
                 emitter.onError(Throwable("Emitter disposed"))

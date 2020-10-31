@@ -7,3 +7,6 @@ object ShowLoading : NoteDetailsState()
 object HideLoading : NoteDetailsState()
 
 object NoteSaved : NoteDetailsState()
+object NoteRemoved : NoteDetailsState()
+
+data class NoteSaveFailure(val throwable: Throwable): NoteDetailsState()

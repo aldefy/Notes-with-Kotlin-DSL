@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import com.caster.notes.dsl.common.addTo
 import com.caster.notes.dsl.common.bind
 import com.caster.notes.dsl.features.details.domain.NoteDetailsState
+import com.caster.notes.dsl.features.details.domain.NoteRemoved
+import com.caster.notes.dsl.features.details.domain.NoteSaveFailure
 import com.caster.notes.dsl.features.details.domain.NoteSaved
 import com.caster.notes.dsl.features.list.domain.HideLoading
 import com.caster.notes.dsl.features.list.domain.ShowLoading
@@ -83,10 +85,19 @@ class NoteDetailsScreenImpl : NoteDetailsScreen {
         compositeDisposable: CompositeDisposable
     ) {
         observable
+            .ofType(NoteRemoved::class.java)
+            .map {
+                _event.value = NoteDeletedEvent
+                Unit
+            }
+            .subscribe()
+            .addTo(compositeDisposable)
+
+        observable
             .ofType(NoteSaved::class.java)
             .map {
-                Unit
                 _event.value = AddNoteSuccess
+                Unit
             }
             .subscribe()
             .addTo(compositeDisposable)
@@ -97,6 +108,13 @@ class NoteDetailsScreenImpl : NoteDetailsScreen {
         observable: Observable<NoteDetailsState>,
         compositeDisposable: CompositeDisposable
     ) {
-
+        observable
+            .ofType(NoteSaveFailure::class.java)
+            .map {
+                _event.value = NoteAddFailedEvent(it.throwable)
+                Unit
+            }
+            .subscribe()
+            .addTo(compositeDisposable)
     }
 }

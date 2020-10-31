@@ -19,8 +19,19 @@ class NoteDetailsViewModel @Inject constructor(var useCase: NoteDetailsUseCase) 
                 _stateLiveData.value = HideLoading
                 _stateLiveData.value = NoteSaved
             }, {
-                it.printStackTrace()
+                _stateLiveData.value = NoteSaveFailure(it)
                 _stateLiveData.value = HideLoading
+            })
+            .addTo(bag)
+    }
+
+    fun deleteNote(note: Note) {
+        useCase.delete(note)
+            .compose(singleIo())
+            .subscribe({
+                _stateLiveData.value = NoteRemoved
+            }, {
+                it.printStackTrace()
             })
             .addTo(bag)
     }

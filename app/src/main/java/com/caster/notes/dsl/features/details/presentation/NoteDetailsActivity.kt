@@ -1,8 +1,10 @@
 package com.caster.notes.dsl.features.details.presentation
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import com.caster.notes.dsl.R
@@ -14,6 +16,7 @@ import com.caster.notes.dsl.features.details.domain.NoteDetailsViewModel
 import com.caster.notes.dsl.model.Note
 import kotlinx.android.synthetic.main.activity_details_note.*
 import javax.inject.Inject
+
 
 private const val EXTRA_NOTE = "extras_note"
 
@@ -48,13 +51,15 @@ class NoteAddActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
         processIntent(intent)
     }
 
-    private fun processIntent(intent: Intent) {
-        if (intent.hasExtra(EXTRA_NOTE)) {
-            note = intent.getParcelableExtra(EXTRA_NOTE)
-        }
-        note?.let {
-            screen.withNote(it, view)
-        }
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        val deleteMenuItem = menu.findItem(R.id.action_delete)
+        deleteMenuItem.isVisible = note != null
+        return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_details, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -63,9 +68,22 @@ class NoteAddActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
                 finish()
                 true
             }
-            R.id.action_clear -> true
+            R.id.action_delete -> {
+                vm.deleteNote(note!!)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun processIntent(intent: Intent) {
+        if (intent.hasExtra(EXTRA_NOTE)) {
+            note = intent.getParcelableExtra(EXTRA_NOTE)
+        }
+        note?.let {
+            screen.withNote(it, view)
+        }
+        invalidateOptionsMenu()
     }
 
     private fun initListeners() {
@@ -87,6 +105,18 @@ class NoteAddActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
                     is SubmitClicked -> {
                         vm.saveNote(generateNote(event))
                     }
+                    is NoteDeletedEvent->{
+                        finish()
+                    }
+                    is NoteAddFailedEvent -> {
+                        AlertDialog.Builder(this)
+                            .setTitle(resources.getString(R.string.error_saving_note))
+                            .setMessage(event.throwable.message ?: "Something went wrong !!")
+                            .setCancelable(false)
+                            .setPositiveButton("Ok") { _, _ ->
+                                finish()
+                            }.show()
+                    }
                     is AddNoteSuccess -> {
                         finish()
                     }
@@ -95,8 +125,8 @@ class NoteAddActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
         )
     }
 
-    private fun generateNote(event: SubmitClicked) : Note {
-        return if(note == null){
+    private fun generateNote(event: SubmitClicked): Note {
+        return if (note == null) {
             Note(
                 title = event.title,
                 content = event.content,

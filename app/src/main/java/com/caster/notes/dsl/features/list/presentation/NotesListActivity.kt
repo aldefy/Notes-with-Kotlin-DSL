@@ -34,10 +34,9 @@ class NotesListActivity : BaseActivity<NotesListViewModel, NotesState>() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_list, menu)
         return true
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
