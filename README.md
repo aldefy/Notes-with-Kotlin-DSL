@@ -1,9 +1,18 @@
 # Notes-with-Kotlin-DSL
 This project showcases notes app built using Kotlin DSL
 
-![Snap 1](/snaps/notes_1.png)
+## Screenshots
+#### List
+<div align="center">
+    <img src="/snaps/notes_1.png" width="400px"</img>
+</div>
 
-![Snap 2](/snaps/note_2.png)
+#### Edit
+<div align="center">
+    <img src="/snaps/note_2.png" width="400px"</img>
+</div>
 
-![Snap 3](/snaps/note_3.png)
-
+#### Add
+<div align="center">
+    <img src="/snaps/note_3.png" width="400px"</img>
+</div>
