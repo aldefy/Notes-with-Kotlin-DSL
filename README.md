@@ -1,6 +1,11 @@
 # Notes-with-Kotlin-DSL
 This project showcases notes app built using Kotlin DSL
 
+## Archtecture used
+- Clean with MVVM 
+
+![]("/snaps/notes_arch.png)
+
 ## Screenshots
 #### List
 <div align="center">
