@@ -1,6 +1,7 @@
 package com.caster.notes.dsl.model
 
 import androidx.room.*
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -10,11 +11,11 @@ interface NotesDao {
     fun getAllNotes(): Observable<List<Note>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addOrUpdate(note: Note) : Long
+    fun addOrUpdate(note: Note) : Completable
 
     @Delete
-    fun delete(note: Note)
+    fun delete(note: Note) : Completable
 
     @Query("DELETE FROM note")
-    fun nuke()
+    fun nuke(): Completable
 }

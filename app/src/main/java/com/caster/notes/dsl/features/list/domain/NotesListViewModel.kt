@@ -1,10 +1,7 @@
 package com.caster.notes.dsl.features.list.domain
 
 import androidx.lifecycle.MutableLiveData
-import com.caster.notes.dsl.common.BaseViewModel
-import com.caster.notes.dsl.common.addTo
-import com.caster.notes.dsl.common.observableIo
-import com.caster.notes.dsl.common.singleIo
+import com.caster.notes.dsl.common.*
 import javax.inject.Inject
 
 class NotesListViewModel @Inject constructor(var useCase: NotesUseCase) : BaseViewModel() {
@@ -30,7 +27,7 @@ class NotesListViewModel @Inject constructor(var useCase: NotesUseCase) : BaseVi
 
     fun clearAll() {
         useCase.nuke()
-            .compose(singleIo())
+            .compose(completableIo())
             .subscribe({
                 _stateLiveData.value = NotesEmpty
             }, {

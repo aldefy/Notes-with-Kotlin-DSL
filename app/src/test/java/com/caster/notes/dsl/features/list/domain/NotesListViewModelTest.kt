@@ -8,6 +8,7 @@ import com.caster.notes.dsl.model.Note
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import org.junit.Test
@@ -80,7 +81,7 @@ class NotesListViewModelTest : BaseJUnitTest() {
 
     @Test
     fun `clearAll should clear entire list and show empty`() {
-        useCase.nuke() willReturn Single.fromCallable { Unit }
+        useCase.nuke() willReturn Completable.complete()
         vm.stateLiveData.observeForever(observer)
         vm.clearAll()
         verify(observer).onChanged(NotesEmpty)
