@@ -75,6 +75,9 @@ class NoteDetailsActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>
                 finish()
                 true
             }
+            R.id.action_share -> {
+                true
+            }
             R.id.action_delete -> {
                 vm.deleteNote(note!!)
                 true
