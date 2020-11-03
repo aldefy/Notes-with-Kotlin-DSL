@@ -6,9 +6,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 
-inline fun <reified T : Any> newIntent(context: Context): Intent =
-    Intent(context, T::class.java)
-
 inline fun <reified T : Any> Activity.launchActivity(
     noinline init: Intent.() -> Unit = {}
 ) {

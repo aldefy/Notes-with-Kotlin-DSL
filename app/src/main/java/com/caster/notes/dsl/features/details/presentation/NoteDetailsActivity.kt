@@ -60,7 +60,9 @@ class NoteDetailsActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         val deleteMenuItem = menu.findItem(R.id.action_delete)
-        deleteMenuItem.isVisible = note != null
+        val shareMenuItem = menu.findItem(R.id.action_share)
+        deleteMenuItem.isVisible = isNewNote()
+        shareMenuItem.isVisible = isNewNote()
         return true
     }
 
@@ -76,6 +78,12 @@ class NoteDetailsActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>
                 true
             }
             R.id.action_share -> {
+                startActivity(Intent.createChooser(Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TITLE, note?.title)
+                    putExtra(Intent.EXTRA_TEXT, note?.getShareableContent())
+                    type = "text/plain"
+                }, "Send note: ${note?.title}"))
                 true
             }
             R.id.action_delete -> {
@@ -85,6 +93,8 @@ class NoteDetailsActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun isNewNote() = note != null
 
     private fun processIntent(intent: Intent) {
         if (intent.hasExtra(EXTRA_NOTE)) {
