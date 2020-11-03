@@ -55,6 +55,9 @@ This project showcases building a simple notes taking app in Android using lates
 
 ![Arch](snaps/notes_arch.png)
 
+| List |  Details |  Add |
+:-------------------------:|:-------------------------:|:-------------------------:
+![](snaps/notes_1.png)  |  ![](snaps/note_2.png) | ![](snaps/note_3.png)
 
 <!-- GETTING STARTED -->
 ## Getting Started
