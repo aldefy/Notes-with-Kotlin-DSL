@@ -19,19 +19,18 @@ class NotesContentView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
     private val linearLayoutManager: LinearLayoutManager = LinearLayoutManager(context)
-    private val emptyListener: NotesAdapter.ResultsEmptyListener = object : NotesAdapter.ResultsEmptyListener{
-        override fun showEmpty() {
-            this@NotesContentView.showEmpty()
-        }
-
-        override fun hideEmpty() {
-            this@NotesContentView.resetError()
-        }
-    }
-    private val adapter = NotesAdapter(emptyListener)
+    private val adapter = NotesAdapter()
 
     init {
         View.inflate(context, R.layout.view_notes, this)
+        with(adapter) {
+            withShowEmptyListener {
+                this@NotesContentView.showEmpty()
+            }
+            withHideEmptyListener {
+                this@NotesContentView.resetError()
+            }
+        }
         linearLayoutManager.reverseLayout = false
         notesRecyclerView.layoutManager = linearLayoutManager
         notesRecyclerView.adapter = adapter
@@ -47,8 +46,8 @@ class NotesContentView @JvmOverloads constructor(
         adapter.setData(data)
     }
 
-    fun setNoteClickListener(clickListener: NotesAdapter.NoteClickListener) {
-        adapter.setNoteClickListener(clickListener)
+    fun setNoteClickListener(block: (Note) -> Unit) {
+        adapter.withNoteClickListener(block)
     }
 
     fun showLoading() {
@@ -63,17 +62,17 @@ class NotesContentView @JvmOverloads constructor(
         adapter.filter.filter(query)
     }
 
-    fun showError(title: String?=null, message: String) {
+    fun showError(title: String? = null, message: String) {
         notesRecyclerView.hide()
         errorView.showError(title, message)
     }
 
-    fun showEmpty(){
+    fun showEmpty() {
         notesRecyclerView.hide()
         errorView.showEmpty()
     }
 
-    private fun hideError(){
+    private fun hideError() {
         errorView.hide()
     }
 

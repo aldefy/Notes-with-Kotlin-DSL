@@ -30,7 +30,7 @@ class NoteSearchView(
         closeButton.setImageResource(R.drawable.ic_close_white)
         searchEditText.hint = context.getString(R.string.generic_search_message)
         searchEditText.apply {
-            setHintTextColor(ContextCompat.getColor(context, R.color.gray))
+            setHintTextColor(ContextCompat.getColor(context, R.color.white))
             setTextColor(ContextCompat.getColor(context, R.color.white))
         }
     }
