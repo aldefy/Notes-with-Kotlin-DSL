@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.caster.notes.dsl.R
 import com.caster.notes.dsl.common.BaseActivity
 import com.caster.notes.dsl.common.addTo
+import com.caster.notes.dsl.common.launchActivity
 import com.caster.notes.dsl.features.details.di.NoteDetailsInjector
 import com.caster.notes.dsl.features.details.domain.NoteDetailsState
 import com.caster.notes.dsl.features.details.domain.NoteDetailsViewModel
@@ -18,17 +19,22 @@ import com.caster.notes.dsl.model.Note
 import kotlinx.android.synthetic.main.activity_details_note.*
 import javax.inject.Inject
 
-
 private const val EXTRA_NOTE = "extras_note"
 
-class NoteAddActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
+class NoteDetailsActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
 
     override val clazz: Class<NoteDetailsViewModel> = NoteDetailsViewModel::class.java
     private val screen by lazy { NoteDetailsScreenImpl() }
 
     companion object {
+        fun start(context: Context, note: Note? = null) {
+            context.launchActivity<NoteDetailsActivity> {
+                putExtra(EXTRA_NOTE, note)
+            }
+        }
+
         fun create(context: Context, note: Note? = null): Intent {
-            return Intent(context, NoteAddActivity::class.java)
+            return Intent(context, NoteDetailsActivity::class.java)
                 .also { intent ->
                     note?.let {
                         intent.putExtra(EXTRA_NOTE, it)
@@ -106,7 +112,7 @@ class NoteAddActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
                     is SubmitClicked -> {
                         vm.saveNote(generateNote(event))
                     }
-                    is NoteDeletedEvent->{
+                    is NoteDeletedEvent -> {
                         finish()
                     }
                     is NoteAddFailedEvent -> {
@@ -118,10 +124,10 @@ class NoteAddActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
                                 finish()
                             }.show()
                     }
-                    is NoteTitleEmptyEvent ->{
+                    is NoteTitleEmptyEvent -> {
                         Toast.makeText(this, "Title is empty", Toast.LENGTH_SHORT).show()
                     }
-                    is NoteContentEmptyEvent->{
+                    is NoteContentEmptyEvent -> {
                         Toast.makeText(this, "Content is empty", Toast.LENGTH_SHORT).show()
                     }
                     is AddNoteSuccess -> {
@@ -134,11 +140,10 @@ class NoteAddActivity : BaseActivity<NoteDetailsViewModel, NoteDetailsState>() {
 
     private fun generateNote(event: SubmitClicked): Note {
         return if (note == null) {
-            Note(
-                title = event.title,
-                content = event.content,
-                createdAt = System.currentTimeMillis()
-            )
+            Note.create {
+                title = event.title
+                content = event.content
+            }
         } else {
             note?.apply {
                 title = event.title
