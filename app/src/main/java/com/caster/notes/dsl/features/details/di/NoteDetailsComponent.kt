@@ -2,7 +2,7 @@ package com.caster.notes.dsl.features.details.di
 
 import android.view.View
 import com.caster.notes.dsl.common.di.component.CommonComponent
-import com.caster.notes.dsl.features.details.presentation.NoteAddActivity
+import com.caster.notes.dsl.features.details.presentation.NoteDetailsActivity
 import dagger.BindsInstance
 import dagger.Component
 
@@ -24,5 +24,5 @@ interface NotesAddComponent {
         fun build(): NotesAddComponent
     }
 
-    fun inject(activity: NoteAddActivity)
+    fun inject(activity: NoteDetailsActivity)
 }
