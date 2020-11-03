@@ -33,6 +33,10 @@ class Note(
 
         fun build() = Note(this)
     }
+
+    fun getShareableContent() : String {
+        return "$title\n$content"
+    }
 }
 
 /**
