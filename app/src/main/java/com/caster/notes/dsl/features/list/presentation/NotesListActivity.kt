@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import com.caster.notes.dsl.R
 import com.caster.notes.dsl.common.BaseActivity
 import com.caster.notes.dsl.common.addTo
-import com.caster.notes.dsl.features.details.presentation.NoteAddActivity
+import com.caster.notes.dsl.features.details.presentation.NoteDetailsActivity
 import com.caster.notes.dsl.features.list.di.NotesInjector
 import com.caster.notes.dsl.features.list.domain.NotesListViewModel
 import com.caster.notes.dsl.features.list.domain.NotesState
@@ -86,10 +86,10 @@ class NotesListActivity : BaseActivity<NotesListViewModel, NotesState>() {
                         screen.showError(view, event.throwable)
                     }
                     is NoteClickedEvent -> {
-                        startActivity(NoteAddActivity.create(this, event.note))
+                        NoteDetailsActivity.start(this, event.note)
                     }
                     is FABClickedEvent -> {
-                        startActivity(NoteAddActivity.create(this))
+                        NoteDetailsActivity.start(this)
                     }
                 }
 

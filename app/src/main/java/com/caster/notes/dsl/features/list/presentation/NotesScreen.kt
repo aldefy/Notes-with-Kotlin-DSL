@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.caster.notes.dsl.common.addTo
 import com.caster.notes.dsl.common.bind
 import com.caster.notes.dsl.features.list.domain.*
-import com.caster.notes.dsl.model.Note
-import com.caster.notes.dsl.views.NotesAdapter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -41,11 +39,9 @@ class NotesScreenImpl : NotesScreen {
     }
 
     fun withNoteClickHandler(view: NotesView) {
-        view.notesContentView.setNoteClickListener(object : NotesAdapter.NoteClickListener {
-            override fun noteClicked(note: Note) {
-                _event.value = NoteClickedEvent(note)
-            }
-        })
+        view.notesContentView.setNoteClickListener { note ->
+            _event.value = NoteClickedEvent(note)
+        }
     }
 
     fun withFAB(view: NotesView) {
