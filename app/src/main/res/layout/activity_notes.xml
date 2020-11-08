@@ -27,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:clickable="true"
+        android:contentDescription="@string/add_note_hint"
         android:focusable="true"
         app:rippleColor="@color/secondaryColor"
         android:layout_margin="@dimen/fab_margin"

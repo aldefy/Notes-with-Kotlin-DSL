@@ -1,9 +1,9 @@
 package com.caster.notes.dsl.model
 
 import android.os.Parcelable
-import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.caster.notes.dsl.common.showcase.NoteModel
 import kotlinx.android.parcel.Parcelize
 import kotlin.properties.Delegates
 
@@ -34,7 +34,7 @@ class Note(
         fun build() = Note(this)
     }
 
-    fun getShareableContent() : String {
+    fun getShareableContent(): String {
         return "$title\n$content"
     }
 }
@@ -52,4 +52,13 @@ infix fun List<Note>.findWithQuery(query: String): List<Note> {
                     ignoreCase = true
                 )
     }
+}
+
+fun NoteModel.toNote(): Note {
+        return Note(
+            id = id,
+            title = title,
+            content = content,
+            createdAt = System.currentTimeMillis()
+        )
 }

@@ -1,4 +1,4 @@
-package com.caster.notes.dsl.views
+package com.caster.notes.dsl.common.showcase
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,24 +7,18 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.caster.notes.dsl.R
-import com.caster.notes.dsl.common.bold
-import com.caster.notes.dsl.common.color
-import com.caster.notes.dsl.common.italic
-import com.caster.notes.dsl.common.spannable
 import com.caster.notes.dsl.model.Note
-import com.caster.notes.dsl.model.findWithQuery
 import com.perfomer.blitz.setTimeAgo
 import kotlinx.android.synthetic.main.item_note.view.*
 import java.util.*
 
-class NotesAdapter() :
-    RecyclerView.Adapter<NotesAdapter.NoteViewHolder>(), Filterable {
+class NotesRVAdapter :
+    RecyclerView.Adapter<NotesRVAdapter.NoteViewHolder>(), Filterable {
 
-    private var data: MutableList<Note> = mutableListOf()
-    private var searchResults: MutableList<Note> = mutableListOf()
-    private var onShowEmpty: () -> Unit = {}
-    private var onHideEmpty: () -> Unit = {}
-    private var onItemClick: (Note) -> Unit = {}
+    private var data: MutableList<NoteModel> = mutableListOf()
+    private var searchResults: MutableList<NoteModel> = mutableListOf()
+    private var clickListener: NoteClickListener? = null
+    private var search: String= ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
@@ -36,81 +30,78 @@ class NotesAdapter() :
     override fun getItemCount() = searchResults.size
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) =
-        holder.bind(note = searchResults[position], onItemClick = onItemClick)
+        holder.bind(note = searchResults[position], clickListener = clickListener)
 
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val queryString = constraint.toString().trim()
+                search = queryString
                 val filterResults = FilterResults()
                 filterResults.values = if (queryString.isEmpty())
                     data
-                else {
-                    data.findWithQuery(queryString)
-                }
+                else
+                    data.filter { row ->
+                        row.title.contains(queryString, ignoreCase = true) or
+                                row.content.contains(
+                                    queryString,
+                                    ignoreCase = true
+                                )
+                    }
                 return filterResults
             }
 
             override fun publishResults(constraint: CharSequence, results: FilterResults) {
                 searchResults.clear()
-                searchResults.addAll(results.values as MutableList<Note>)
+                searchResults.addAll(results.values as MutableList<NoteModel>)
                 notifyDataSetChanged()
-                checkForEmptyResults()
             }
         }
     }
 
-    fun setData(data: List<Note>) {
+    fun setData(data: List<NoteModel>) {
         this.data.clear()
         this.searchResults.clear()
         this.data.addAll(data)
         this.searchResults.addAll(data)
-        notifyDataSetChanged()
-        checkForEmptyResults()
+        filter.filter(search)
     }
 
-    fun withNoteClickListener(block: (Note) -> Unit) {
-        onItemClick = block
+    fun addNote(data: NoteModel) {
+        this.data.add(data)
+        this.searchResults.add(data)
+        filter.filter(search)
     }
 
-    fun withShowEmptyListener(block: () -> Unit) {
-        onShowEmpty = block
+    fun addNotes(data: List<NoteModel>) {
+        this.data.addAll(data)
+        this.searchResults.addAll(data)
+        filter.filter(search)
     }
 
-    fun withHideEmptyListener(block: () -> Unit) {
-        onHideEmpty = block
-    }
-
-    private fun checkForEmptyResults() {
-        if (searchResults.isEmpty()) {
-            onShowEmpty()
-        } else {
-            onHideEmpty()
-        }
+    fun setNoteClickListener(clickListener: NoteClickListener?) {
+        this.clickListener = clickListener
     }
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(
-            note: Note,
-            onItemClick: (Note) -> Unit
+            note: NoteModel,
+            clickListener: NoteClickListener?
         ) = with(note) {
-            val titleSpannable = spannable {
-                bold(color(color = R.color.primaryTextColor, s = title))
-            }
-            val contentSpannable = spannable {
-                italic(color(R.color.secondaryTextColor, s = content))
-            }
-            itemView.tvNoteTitle.text = titleSpannable
-            itemView.tvNoteText.text = contentSpannable
+            itemView.tvNoteTitle.text = title
+            itemView.tvNoteText.text = content
             itemView.tvElapsed.setTimeAgo(
                 date = Date(updatedAt),
                 showSeconds = false,
                 autoUpdate = true
             )
             itemView.setOnClickListener {
-                onItemClick(note)
+                clickListener?.noteClicked(note = note)
             }
         }
     }
-}
 
+    interface NoteClickListener {
+        fun noteClicked(note: NoteModel)
+    }
+}

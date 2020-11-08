@@ -22,4 +22,5 @@
   <string name="error_empty_message">There no notes , add a new one ?</string>
   <string name="error_saving_note">Error saving note</string>
     <string name="action_share">Share</string>
+    <string name="add_note_hint">Add a new note</string>
 </resources>
